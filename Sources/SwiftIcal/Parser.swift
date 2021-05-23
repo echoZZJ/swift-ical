@@ -16,22 +16,12 @@ class VParser {
         let cfreeBusy = "VFREEBUSY".cString(using: .utf8)
         let freebusyComp = icalcomponent_get_first_component(comp, icalcomponent_string_to_kind(cfreeBusy))
         var nxtFBComp = icalcomponent_get_next_component(comp, icalcomponent_string_to_kind(cfreeBusy))
-//        let freebusyComp = icalcomponent_get_next_component(comp,
-//                                         icalcomponent_string_to_kind(cfreeBusy))
-//        let freebusy = icalcomponent_get_comment(comp)
         let uid = icalcomponent_get_uid(freebusyComp)
         innerParserLogic(with: freebusyComp)
         while let nxtComp = nxtFBComp {
             innerParserLogic(with: nxtComp)
             nxtFBComp = icalcomponent_get_next_component(comp, icalcomponent_string_to_kind(cfreeBusy))
         }
-        
-//        let property  = icalcomponent_get_first_property(freebusyComp, icalproperty_string_to_kind(corg))
-//        let orgInfo : String? =  .init(cString: icalproperty_get_organizer(property))
-//        let uidString : String? = .init(cString: icalcomponent_get_uid(freebusyComp))
-//        let day = icalcomponent_get_dtstamp(comp).day
-//        print(orgInfo)
-//        icalcomponent_isa_component(icalcomponent_new_vfreebusy())
         
         
     }
@@ -78,8 +68,6 @@ class VParser {
                 print("-- second start is \(start), second end is \(end)")
             }
         }
-//        icalcomponent_get_first_property(<#T##component: OpaquePointer!##OpaquePointer!#>, icalproperty_string_to_kind(corg))
-//        let fyvalue = icalproperty_get_first_parameter(<#T##prop: OpaquePointer!##OpaquePointer!#>, icalparameter_string_to_kind("FBTYPE"))
     }
 }
 extension String {
