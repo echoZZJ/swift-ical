@@ -59,7 +59,10 @@ static pthread_mutex_t changes_mutex = PTHREAD_MUTEX_INITIALIZER;
 #endif
 
 /** This is the toplevel directory where the timezone data is installed in. */
-#define ZONEINFO_DIRECTORY      PACKAGE_DATA_DIR "/zoneinfo"
+#define ZONEINFO_DIRNAME "/zoneinfo"
+#define PACKAGE_DATA_DIR "/"
+#define ZONEINFO_DIRECTORY PACKAGE_DATA_DIR ZONEINFO_DIRNAME
+
 
 /** The prefix we use to uniquely identify TZIDs.
     It must begin and end with forward slashes.
