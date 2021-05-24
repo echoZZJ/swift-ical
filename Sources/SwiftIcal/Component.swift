@@ -184,19 +184,22 @@ public struct Attendee {
                 delegatedTo: [CalendarUserAddress]? = nil,
                 delegatedFrom: [CalendarUserAddress]? = nil,
                 sentBy: CalendarUserAddress? = nil,
-                commonName: CommonName? = nil) {
+                commonName: CommonName? = nil,
+                xAvatar: String? = nil,
+                xUserID: String? = nil) {
         self.address = address
         self.type = type
         self.participationStatus = participationStatus
         self.role = role
-        self.rsvp = rsvp
         self.member = member
         self.delegatedTo = delegatedTo
         self.delegatedFrom = delegatedFrom
         self.sentBy = sentBy
         self.commonName = commonName
+        self.rsvp = rsvp
+        self.xAvatar = xAvatar
+        self.xUserID = xUserID
     }
-
     /// E-Mail address of the attendee
     public var address: CalendarUserAddress
 
@@ -235,9 +238,20 @@ public struct Attendee {
 
     /// Property if the attendee is requested to send
     public var rsvp: Bool
+
+    /**
+        extension property
+     */
+    ///DCALENDAR-USERAVATAR
+    public var xAvatar: String?
+    ///DCALENDAR-USER-ID
+    public var xUserID: String?
+    
 }
 
 extension Attendee: LibicalPropertyConvertible {
+    static let xUserAvatarParam : String = "X-DCALENDAR-AVATAR-URL"
+    static let xUserUserIDParam : String = "X-DCALENDAR-USER-ID"
     func libicalProperty() -> LibicalProperty {
         let property = icalproperty_new_attendee(self.address.mailtoAddress)
         if type != .individual {
@@ -273,6 +287,17 @@ extension Attendee: LibicalPropertyConvertible {
         if rsvp == true {
             icalproperty_add_parameter(property, icalparameter_new_rsvp(ICAL_RSVP_TRUE))
         }
+        if let userID = xUserID {
+            let parameter = icalparameter_new_xUserID(Attendee.xUserUserIDParam)
+            icalparameter_set_x(parameter!, userID)
+            icalproperty_add_parameter(property, parameter!)
+        }
+        if let avatar = xAvatar {
+            let parameter = icalparameter_new_xUserAvatar(Attendee.xUserAvatarParam)
+            icalparameter_set_x(parameter!, avatar)
+            icalproperty_add_parameter(property, parameter!)
+        }
+        
         return property!
     }
 }

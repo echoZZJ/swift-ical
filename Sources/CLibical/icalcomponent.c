@@ -292,7 +292,8 @@ char *icalcomponent_as_ical_string_r(icalcomponent *impl)
 
         icalerror_assert((p != 0), "Got a null property");
         tmp_buf = icalproperty_as_ical_string_r(p);
-
+        printf("tmp_buf second:");
+        printf(tmp_buf);
         icalmemory_append_string(&buf, &buf_ptr, &buf_size, tmp_buf);
         free(tmp_buf);
     }
@@ -301,7 +302,8 @@ char *icalcomponent_as_ical_string_r(icalcomponent *impl)
         c = (icalcomponent *) pvl_data(itr);
 
         tmp_buf = icalcomponent_as_ical_string_r(c);
-
+        printf("tmp_buf second:");
+        printf(tmp_buf);
         icalmemory_append_string(&buf, &buf_ptr, &buf_size, tmp_buf);
         free(tmp_buf);
     }

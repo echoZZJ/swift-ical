@@ -13,6 +13,7 @@ import Foundation
 class TimezoneTests: XCTestCase {
 
     func testSouthGeoriga() {
+        print(TimeZone(identifier: "Atlantic/South_Georgia")?.icalString)
         XCTAssertNotNil(TimeZone(identifier: "Atlantic/South_Georgia")?.icalString)
     }
 

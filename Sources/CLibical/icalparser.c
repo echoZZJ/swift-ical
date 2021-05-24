@@ -958,6 +958,13 @@ icalcomponent *icalparser_add_line(icalparser *parser, char *line)
                     icalparameter_set_xname(param, name);
                     icalparameter_set_xvalue(param, pvalue);
                 }
+            } else if (kind == ICAL_CN_PARAMETER) {
+                param = icalparameter_new(ICAL_CN_PARAMETER);
+                if (param != 0) {
+                    icalparameter_set_xname(param, name);
+                    icalparameter_set_xvalue(param, pvalue);
+                }
+               
             } else if (kind == ICAL_TZID_PARAMETER && *(end - 1) != ';') {
                 /*
                    Special case handling for TZID to work around invalid incoming data.

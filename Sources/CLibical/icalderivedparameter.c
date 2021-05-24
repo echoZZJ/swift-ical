@@ -83,7 +83,7 @@ static const struct icalparameter_value_kind_map value_kind_map[15] = {
     {ICAL_VALUE_NONE, ICAL_NO_VALUE}
 };
 
-static const struct icalparameter_kind_map parameter_map[51] = {
+static const struct icalparameter_kind_map parameter_map[53] = {
     {ICAL_ACTIONPARAM_PARAMETER, "ACTIONPARAM"},
     {ICAL_ALTREP_PARAMETER, "ALTREP"},
     {ICAL_CHARSET_PARAMETER, "CHARSET"},
@@ -132,6 +132,8 @@ static const struct icalparameter_kind_map parameter_map[51] = {
     {ICAL_TZID_PARAMETER, "TZID"},
     {ICAL_VALUE_PARAMETER, "VALUE"},
     {ICAL_X_PARAMETER, "X"},
+    {ICAL_XUSerID, "X-DCALENDAR-USER-ID"},
+    {ICAL_XUserAvatar, "X-DCALENDAR-AVATAR-URL"},
     {ICAL_XLICCOMPARETYPE_PARAMETER, "X-LIC-COMPARETYPE"},
     {ICAL_XLICERRORTYPE_PARAMETER, "X-LIC-ERRORTYPE"},
     { ICAL_NO_PARAMETER, ""}
@@ -2254,7 +2256,53 @@ void icalparameter_set_value(icalparameter *param, icalparameter_value v)
     }
     ((struct icalparameter_impl *)param)->data = (int)v;
 }
+icalparameter *icalparameter_new_xUserID(const char * v)
+{
+    struct icalparameter_impl *impl;
+    icalerror_clear_errno();
+    icalerror_check_arg_rz((v != 0), "v");
+    impl = icalparameter_new_impl(ICAL_XUSerID);
+    if (impl == 0) {
+       return 0;
+    }
 
+    icalparameter_set_xCustom((icalparameter *)impl, v);
+    if (icalerrno != ICAL_NO_ERROR) {
+       icalparameter_free((icalparameter *)impl);
+       return 0;
+    }
+
+    return (icalparameter *)impl;
+}
+icalparameter *icalparameter_new_xUserAvatar(const char * v)
+{
+    struct icalparameter_impl *impl;
+    icalerror_clear_errno();
+    icalerror_check_arg_rz((v != 0), "v");
+    impl = icalparameter_new_impl(ICAL_XUserAvatar);
+    if (impl == 0) {
+       return 0;
+    }
+
+    icalparameter_set_xCustom((icalparameter *)impl, v);
+    if (icalerrno != ICAL_NO_ERROR) {
+       icalparameter_free((icalparameter *)impl);
+       return 0;
+    }
+
+    return (icalparameter *)impl;
+}
+
+void icalparameter_set_xCustom(icalparameter *param, const char * v)
+{
+    icalerror_check_arg_rv((v != 0), "v");
+    icalerror_check_arg_rv((param != 0), "param");
+    icalerror_clear_errno();
+    if (param->string != NULL) {
+           free((void *)param->string);
+       }
+    ((struct icalparameter_impl *)param)->string = icalmemory_strdup(v);
+}
 /* X */
 icalparameter *icalparameter_new_x(const char * v)
 {

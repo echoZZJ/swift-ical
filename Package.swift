@@ -5,6 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "swift-ical",
+    platforms: [
+       // Add support for all platforms starting from a specific version.
+       .iOS(.v9),
+    ],
     products: [
         .library(
             name: "SwiftIcal",

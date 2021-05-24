@@ -246,7 +246,7 @@ static void icalparameter_append_encoded_value(char **buf, char **buf_ptr,
                 break;
 
             case '"':
-                icalmemory_append_string(buf, buf_ptr, buf_size, "^'");
+                icalmemory_append_string(buf, buf_ptr, buf_size, "\"");
                 break;
 
             default:
@@ -312,6 +312,9 @@ char *icalparameter_as_ical_string_r(icalparameter *param)
     if (param->string != 0) {
         icalparameter_append_encoded_value(&buf, &buf_ptr, &buf_size, param->string);
     } else if (param->data != 0) {
+        if (param->kind == ICAL_CN_PARAMETER) {
+            printf(param -> data);
+        }
         const char *str = icalparameter_enum_to_string(param->data);
 
         icalmemory_append_string(&buf, &buf_ptr, &buf_size, str);

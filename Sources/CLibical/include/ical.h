@@ -2343,7 +2343,9 @@ typedef enum icalparameter_kind {
     ICAL_X_PARAMETER = 29,
     ICAL_XLICCOMPARETYPE_PARAMETER = 30,
     ICAL_XLICERRORTYPE_PARAMETER = 31,
-    ICAL_NO_PARAMETER = 32
+    ICAL_NO_PARAMETER = 32,
+    ICAL_XUSerID = 52,
+    ICAL_XUserAvatar = 53
 } icalparameter_kind;
 
 #define ICALPARAMETER_FIRST_ENUM 20000
@@ -2796,12 +2798,13 @@ LIBICAL_ICAL_EXPORT void icalparameter_set_tzid(icalparameter *value, const char
 LIBICAL_ICAL_EXPORT icalparameter * icalparameter_new_value(icalparameter_value v);
 LIBICAL_ICAL_EXPORT icalparameter_value icalparameter_get_value(const icalparameter *value);
 LIBICAL_ICAL_EXPORT void icalparameter_set_value(icalparameter *value, icalparameter_value v);
-
+LIBICAL_ICAL_EXPORT icalparameter *icalparameter_new_xUserAvatar(const char * v);
+LIBICAL_ICAL_EXPORT icalparameter *icalparameter_new_xUserID(const char * v);
 /* X */
 LIBICAL_ICAL_EXPORT icalparameter * icalparameter_new_x(const char * v);
 LIBICAL_ICAL_EXPORT const char * icalparameter_get_x(const icalparameter *value);
 LIBICAL_ICAL_EXPORT void icalparameter_set_x(icalparameter *value, const char * v);
-
+LIBICAL_ICAL_EXPORT void icalparameter_set_xCustom(icalparameter *param, const char * v);
 /* X-LIC-COMPARETYPE */
 LIBICAL_ICAL_EXPORT icalparameter * icalparameter_new_xliccomparetype(icalparameter_xliccomparetype v);
 LIBICAL_ICAL_EXPORT icalparameter_xliccomparetype icalparameter_get_xliccomparetype(const icalparameter *value);
